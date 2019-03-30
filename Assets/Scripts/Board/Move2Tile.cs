@@ -23,5 +23,7 @@ public class Move2Tile : MonoBehaviour
         player.transform.position = new Vector3(transform.position.x,
             transform.position.y + transform.localScale.y / 2
             + player.transform.localScale.y + 0.25f, transform.position.z);
+
+        transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 }
