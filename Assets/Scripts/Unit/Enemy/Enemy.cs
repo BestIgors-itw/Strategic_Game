@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Unit
 {
-    private GameObject interest;
-
     // Start is called before the first frame update
     void Start()
     {
-        interest = GameObject.FindGameObjectWithTag("Finish");
+        target = GameObject.FindGameObjectWithTag("Finish");
+        agent = GetComponent<NavMeshAgent>();
 
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-        agent.destination = interest.transform.position;
+        MoveTo(target);
     }
 
     // Update is called once per frame
