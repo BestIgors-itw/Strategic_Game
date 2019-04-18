@@ -16,6 +16,7 @@ public class Teammate : Unit
         info = GetComponent<ObjectInfo>();
         agent = GetComponent<NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Enemy");
+        gun = transform.Find("Gun").gameObject;        
     }
 
     // Update is called once per frame
@@ -38,17 +39,14 @@ public class Teammate : Unit
             }
         }
 
-        
-        float aimY = (Mathf.Atan2(transform.position.x - target.transform.position.x,
-            transform.position.z - target.transform.position.z) * 180f) / Mathf.PI;
+        if (target != null) {            
+            Vector3 heading = target.transform.position - transform.position;
 
-        aimY -= 90f;
+            float distance = heading.magnitude;
+            Vector3 direction = heading / distance; 
 
-        if (aimY <= 180f)
-        {
-            aimY += 180f;
+            transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z)) * Quaternion.Euler(0, -90, 0);
+            gun.transform.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(0, -90, 90);
         }
-
-        transform.rotation = Quaternion.Euler(0, aimY, 0);                
     }
 }

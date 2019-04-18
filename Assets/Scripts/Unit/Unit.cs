@@ -5,6 +5,10 @@ using UnityEngine.AI;
 
 public class Unit : MonoBehaviour
 {
+    protected float aimY;
+    protected float aimZ;
+
+    protected GameObject gun = null;
     protected GameObject target = null;
     protected GameObject destination = null;
     protected NavMeshAgent agent;
