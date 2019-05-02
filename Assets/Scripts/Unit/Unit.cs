@@ -12,6 +12,7 @@ public class Unit : MonoBehaviour
 
     protected GameObject gun = null;
     protected GameObject target = null;
+    protected GameObject[] targets = null;
     protected GameObject destination = null;
 
     protected NavMeshAgent agent;

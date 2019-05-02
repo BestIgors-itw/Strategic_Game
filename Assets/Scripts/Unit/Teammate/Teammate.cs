@@ -3,9 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class Teammate : Unit
-{
-    private Vector3 direction;
-
+{    
     private Ray ray;
     private RaycastHit hit;
 
@@ -46,19 +44,48 @@ public class Teammate : Unit
 
     protected void Aim()
     {
+        float distance;
+
+        Vector3 heading;
+        Vector3 direction;
+
         if (target == null)
         {
-            target = GameObject.FindGameObjectWithTag("Enemy");
+            targets = GameObject.FindGameObjectsWithTag("Enemy");
+
+            if (targets != null) {
+                GameObject closest = null;
+
+                foreach (GameObject obj in targets)
+                {
+                    if (closest == null)
+                    {
+                        closest = obj;
+                    }
+                    else
+                    {
+                        if ((closest.transform.position - transform.position).magnitude
+                            > (obj.transform.position - transform.position).magnitude)
+                        {
+                            closest = obj;
+                        }
+                    }
+                }
+
+                target = closest;
+            }
         }
+        else
+        {
+            heading = target.transform.position - transform.position;
 
-        Vector3 heading = target.transform.position - transform.position;
+            distance = heading.magnitude;
+            direction = heading / distance;
 
-        float distance = heading.magnitude;
-        direction = heading / distance;
+            transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
 
-        transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-
-        gun.transform.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(90, 0, 0);
+            gun.transform.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(90, 0, 0);
+        }
     }
 
     private IEnumerator Fire()
