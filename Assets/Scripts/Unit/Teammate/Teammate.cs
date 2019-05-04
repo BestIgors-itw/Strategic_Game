@@ -55,19 +55,26 @@ public class Teammate : Unit
 
             if (targets != null) {
                 GameObject closest = null;
+                float closest_sqrDistance = 0f;
+                float check_sqrDistance;
 
                 foreach (GameObject obj in targets)
                 {
-                    if (closest == null)
+                    if (closest_sqrDistance == 0f)
                     {
                         closest = obj;
+                        closest_sqrDistance = (obj.transform.position
+                            - transform.position).sqrMagnitude;
                     }
                     else
                     {
-                        if ((closest.transform.position - transform.position).magnitude
-                            > (obj.transform.position - transform.position).magnitude)
+                        check_sqrDistance = (obj.transform.position
+                            - transform.position).sqrMagnitude;
+
+                        if (closest_sqrDistance > check_sqrDistance)
                         {
                             closest = obj;
+                            closest_sqrDistance = check_sqrDistance;
                         }
                     }
                 }
@@ -80,11 +87,21 @@ public class Teammate : Unit
             heading = target.transform.position - transform.position;
 
             distance = heading.magnitude;
-            direction = heading / distance;
 
-            transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            if (distance > target_range)
+            {
+                target = null;
+            }
+            else
+            {
+                direction = heading / distance;
 
-            gun.transform.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(90, 0, 0);
+                transform.rotation = Quaternion.LookRotation(new
+                    Vector3(direction.x, 0, direction.z));
+
+                gun.transform.rotation = Quaternion.LookRotation(direction)
+                    * Quaternion.Euler(90, 0, 0);
+            }
         }
     }
 

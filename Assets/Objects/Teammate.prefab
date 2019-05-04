@@ -202,6 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   shell: {fileID: 0}
+  target_range: 5
 --- !u!54 &1546886687464413405
 Rigidbody:
   m_ObjectHideFlags: 0

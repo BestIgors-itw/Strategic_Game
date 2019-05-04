@@ -3,16 +3,18 @@ using UnityEngine.AI;
 
 public class Unit : MonoBehaviour
 {
-    public float health;
-
-    public GameObject shell;
+    public float health;    
 
     protected float aimY;
     protected float aimZ;
 
     protected GameObject gun = null;
+    public GameObject shell;
+
     protected GameObject target = null;
     protected GameObject[] targets = null;
+    public float target_range;
+    
     protected GameObject destination = null;
 
     protected NavMeshAgent agent;
