@@ -17,6 +17,7 @@ public class Teammate : Unit
         shells = GameObject.Find("Shells").transform;
 
         StartCoroutine(Fire());
+        StartCoroutine(ChooseTarget());
     }
 
     // Update is called once per frame
@@ -42,18 +43,14 @@ public class Teammate : Unit
         Aim();
     }
 
-    protected void Aim()
+    private IEnumerator ChooseTarget()
     {
-        float distance;
-
-        Vector3 heading;
-        Vector3 direction;
-
-        if (target == null)
-        {
+        while (true)
+        {            
             targets = GameObject.FindGameObjectsWithTag("Enemy");
 
-            if (targets != null) {
+            if (targets != null)
+            {
                 GameObject closest = null;
                 float closest_sqrDistance = 0f;
                 float check_sqrDistance;
@@ -81,27 +78,48 @@ public class Teammate : Unit
 
                 target = closest;
             }
+            else
+            {
+                target = null;
+            }
+
+            yield return new WaitForSeconds(0.3f);
         }
-        else
+    }
+
+    protected void Aim()
+    {
+        float distance;
+
+        Vector3 heading;
+        Vector3 direction;
+
+        if (target != null)
         {
             heading = target.transform.position - transform.position;
 
             distance = heading.magnitude;
 
+            direction = heading / distance;
+
+            transform.rotation = Quaternion.LookRotation(new
+                Vector3(direction.x, 0, direction.z));
+
+            gun.transform.rotation = Quaternion.LookRotation(direction)
+                * Quaternion.Euler(90, 0, 0);
+
             if (distance > target_range)
             {
-                target = null;
+                isAimed = false;
             }
             else
             {
-                direction = heading / distance;
-
-                transform.rotation = Quaternion.LookRotation(new
-                    Vector3(direction.x, 0, direction.z));
-
-                gun.transform.rotation = Quaternion.LookRotation(direction)
-                    * Quaternion.Euler(90, 0, 0);
+                isAimed = true;
             }
+        }
+        else
+        {
+            isAimed = false;
         }
     }
 
@@ -111,9 +129,11 @@ public class Teammate : Unit
         {
             yield return new WaitForSeconds(1.5f);
 
-            GameObject sh = Instantiate(shell, gun.transform.position, gun.transform.rotation, shells.transform);
-            Physics.IgnoreCollision(sh.GetComponent<Collider>(), GetComponent<Collider>());
-            sh.transform.up = gun.transform.up;
+            if (isAimed) {
+                GameObject sh = Instantiate(shell, gun.transform.position, gun.transform.rotation, shells.transform);
+                Physics.IgnoreCollision(sh.GetComponent<Collider>(), GetComponent<Collider>());
+                sh.transform.up = gun.transform.up;
+            }
         }
     }    
 }

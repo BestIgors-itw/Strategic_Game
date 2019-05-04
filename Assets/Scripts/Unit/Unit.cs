@@ -8,6 +8,8 @@ public class Unit : MonoBehaviour
     protected float aimY;
     protected float aimZ;
 
+    protected bool isAimed;
+
     protected GameObject gun = null;
     public GameObject shell;
 
