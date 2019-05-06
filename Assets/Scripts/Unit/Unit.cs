@@ -51,7 +51,7 @@ public class Unit : MonoBehaviour
         {
             health -= collision.gameObject.GetComponent<Shell>().damage;
 
-            if (health < 0)
+            if (health <= 0)
             {
                 Destroy(gameObject, 0.5f);
             }

@@ -13,7 +13,7 @@ public class Teammate : Unit
         info = GetComponent<ObjectInfo>();
         agent = GetComponent<NavMeshAgent>();
 
-        gun = transform.Find("Gun").gameObject;
+        gun = transform.Find("Gun").gameObject;        
         shells = GameObject.Find("Shells").transform;
 
         StartCoroutine(Fire());
@@ -94,7 +94,11 @@ public class Teammate : Unit
         Vector3 heading;
         Vector3 direction;
 
-        if (target != null)
+        if (target == null)
+        {
+            isAimed = false;
+        }
+        else
         {
             heading = target.transform.position - transform.position;
 
@@ -102,24 +106,32 @@ public class Teammate : Unit
 
             direction = heading / distance;
 
-            transform.rotation = Quaternion.LookRotation(new
-                Vector3(direction.x, 0, direction.z));
+            transform.rotation = Quaternion.RotateTowards(transform.rotation,
+                Quaternion.LookRotation(new
+                Vector3(direction.x, 0, direction.z)), Time.deltaTime * 120f);
 
-            gun.transform.rotation = Quaternion.LookRotation(direction)
-                * Quaternion.Euler(90, 0, 0);
-
-            if (distance > target_range)
+            if (Vector3.Angle(new Vector3(heading.x, 0, heading.z), new Vector3(transform.forward.x, 0, transform.forward.z)) < 10.0f)
             {
-                isAimed = false;
+                gun.transform.rotation = Quaternion.RotateTowards(gun.transform.rotation,
+                Quaternion.LookRotation(direction)
+                * Quaternion.Euler(90, 0, 0), Time.deltaTime * 40f);
+
+                if (Vector3.Angle(heading, gun.transform.up) < 10.0f)
+                {
+                    if (distance > target_range)
+                    {
+                        isAimed = false;
+                    }
+                    else
+                    {
+                        isAimed = true;
+                    }
+                }
             }
             else
             {
-                isAimed = true;
+                isAimed = false;
             }
-        }
-        else
-        {
-            isAimed = false;
         }
     }
 
