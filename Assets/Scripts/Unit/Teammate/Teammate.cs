@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,13 +7,18 @@ public class Teammate : Unit
     private Ray ray;
     private RaycastHit hit;
 
-    ObjectInfo info;
-
     // Start is called before the first frame update
     void Start()
     {
         info = GetComponent<ObjectInfo>();
         agent = GetComponent<NavMeshAgent>();
+        agent.stoppingDistance = 0.3f;
+
+        gun = transform.Find("Gun").gameObject;
+        shells = GameObject.Find("Shells").transform;
+
+        StartCoroutine(ChooseTarget("Enemy"));
+        StartCoroutine(Fire());
     }
 
     // Update is called once per frame
@@ -27,14 +31,16 @@ public class Teammate : Unit
             if (Physics.Raycast(ray, out hit, 100))
             {
                 if (hit.collider.tag == "Tile" || hit.collider.tag == "Finish")
-                {                                        
+                {
                     info.isSelected = false;
 
-                    destination = hit.collider.gameObject;
+                    destination = hit.collider.transform;
 
                     MoveTo(destination);
                 }
             }
         }
+
+        Aim();
     }
 }

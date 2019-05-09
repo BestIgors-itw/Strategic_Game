@@ -8,15 +8,23 @@ public class Enemy : Unit
     // Start is called before the first frame update
     void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Finish");
         agent = GetComponent<NavMeshAgent>();
+        agent.stoppingDistance = 0.3f;
 
-        MoveTo(target);
+        gun = transform.Find("Gun").gameObject;
+        shells = GameObject.Find("Shells").transform;
+
+        destination = GameObject.FindGameObjectWithTag("Finish").transform;
+
+        StartCoroutine(ChooseTarget("Teammate"));
+        StartCoroutine(Fire());
+        
+        MoveTo(destination);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Aim();
     }
 }
