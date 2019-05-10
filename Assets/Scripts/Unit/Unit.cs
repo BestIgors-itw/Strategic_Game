@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,7 +16,7 @@ public class Unit : MonoBehaviour
     public GameObject shell;
 
     protected GameObject target = null;
-    protected GameObject[] targets = null;
+    protected List<GameObject> targets;
     public float target_range;
     
     protected Transform destination = null;
@@ -24,19 +25,7 @@ public class Unit : MonoBehaviour
 
     protected ObjectInfo info;
 
-    protected Transform shells = null;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-                             
-    }
-
-    // Update is called once per frame
-    void Update()
-    {        
-        
-    }
+    protected Transform shells = null;    
 
     protected void MoveTo(Transform destination)
     {
@@ -130,13 +119,18 @@ public class Unit : MonoBehaviour
         }
     }
 
-    protected IEnumerator ChooseTarget(string targetType)
+    protected IEnumerator ChooseTarget(string[] targetsTags)
     {
         while (true)
         {
-            targets = GameObject.FindGameObjectsWithTag(targetType);
+            targets.Clear();
 
-            if (targets != null)
+            foreach (string tag in targetsTags)
+            {                                
+                targets.AddRange(GameObject.FindGameObjectsWithTag(tag));
+            }
+
+            if (targets.Count != 0)
             {
                 GameObject closest = null;
                 float closest_sqrDistance = 0f;

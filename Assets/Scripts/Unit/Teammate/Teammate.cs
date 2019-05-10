@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,7 +18,10 @@ public class Teammate : Unit
         gun = transform.Find("Gun").gameObject;
         shells = GameObject.Find("Shells").transform;
 
-        StartCoroutine(ChooseTarget("Enemy"));
+        targets = new List<GameObject>();
+
+        string[] tags = new string[] { "Enemy" };
+        StartCoroutine(ChooseTarget(tags));
         StartCoroutine(Fire());
     }
 

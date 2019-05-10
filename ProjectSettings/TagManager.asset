@@ -7,6 +7,8 @@ TagManager:
   - Tile
   - Teammate
   - Enemy
+  - Shell
+  - Strategic Object
   layers:
   - Default
   - TransparentFX

@@ -14,12 +14,15 @@ public class Enemy : Unit
         gun = transform.Find("Gun").gameObject;
         shells = GameObject.Find("Shells").transform;
 
-        destination = GameObject.FindGameObjectWithTag("Finish").transform;
+        //        destination = GameObject.FindGameObjectWithTag("Finish").transform;
 
-        StartCoroutine(ChooseTarget("Teammate"));
+        targets = new List<GameObject>();
+
+        string[] tags = new string[] { "Teammate", "Strategic Object" };
+        StartCoroutine(ChooseTarget(tags));
         StartCoroutine(Fire());
         
-        MoveTo(destination);
+//        MoveTo(destination);
     }
 
     // Update is called once per frame
