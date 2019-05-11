@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,15 +13,18 @@ public class Enemy : Unit
         gun = transform.Find("Gun").gameObject;
         shells = GameObject.Find("Shells").transform;
 
-        //        destination = GameObject.FindGameObjectWithTag("Finish").transform;
+        GameObject ds = GameObject.FindGameObjectWithTag("Strategic Object");
+       
+        if (ds != null) {
+            destination = ds.transform;
+            MoveTo(destination);
+        }
 
         targets = new List<GameObject>();
 
-        string[] tags = new string[] { "Teammate", "Strategic Object" };
-        StartCoroutine(ChooseTarget(tags));
+        StartCoroutine(ChooseTarget(new string[] { "Teammate", "Strategic Object" }));
         StartCoroutine(Fire());
-        
-//        MoveTo(destination);
+        StartCoroutine(Movement());        
     }
 
     // Update is called once per frame

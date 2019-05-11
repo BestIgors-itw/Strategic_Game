@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Unit : MonoBehaviour
 {
-    public float health;    
+    public float health;
 
     public float aimGorizontalSpeed;
     public float aimVerticalSpeed;
@@ -18,14 +18,14 @@ public class Unit : MonoBehaviour
     protected GameObject target = null;
     protected List<GameObject> targets;
     public float target_range;
-    
+
     protected Transform destination = null;
 
     protected NavMeshAgent agent;
 
     protected ObjectInfo info;
 
-    protected Transform shells = null;    
+    protected Transform shells = null;
 
     protected void MoveTo(Transform destination)
     {
@@ -43,7 +43,7 @@ public class Unit : MonoBehaviour
                 Destroy(gameObject, 0.5f);
             }
         }
-    }        
+    }
 
     protected void Aim()
     {
@@ -52,7 +52,8 @@ public class Unit : MonoBehaviour
         Vector3 heading;
         Vector3 direction;
 
-        if (agent.velocity == Vector3.zero) {
+        if (agent.velocity == Vector3.zero)
+        {
             if (target == null)
             {
                 isAimed = false;
@@ -123,45 +124,67 @@ public class Unit : MonoBehaviour
     {
         while (true)
         {
-            targets.Clear();
-
-            foreach (string tag in targetsTags)
-            {                                
-                targets.AddRange(GameObject.FindGameObjectsWithTag(tag));
-            }
-
-            if (targets.Count != 0)
+            if (target == null || (target.transform.position -
+                transform.position).magnitude > target_range)
             {
-                GameObject closest = null;
-                float closest_sqrDistance = 0f;
-                float check_sqrDistance;
+                targets.Clear();
 
-                foreach (GameObject obj in targets)
+                foreach (string tag in targetsTags)
                 {
-                    if (closest_sqrDistance == 0f)
-                    {
-                        closest = obj;
-                        closest_sqrDistance = (obj.transform.position
-                            - transform.position).sqrMagnitude;
-                    }
-                    else
-                    {
-                        check_sqrDistance = (obj.transform.position
-                            - transform.position).sqrMagnitude;
-
-                        if (closest_sqrDistance > check_sqrDistance)
-                        {
-                            closest = obj;
-                            closest_sqrDistance = check_sqrDistance;
-                        }
-                    }
+                    targets.AddRange(GameObject.FindGameObjectsWithTag(tag));
                 }
 
-                target = closest;
+                if (targets.Count != 0)
+                {
+                    GameObject closest = null;
+                    float closest_sqrDistance = 0f;
+                    float check_sqrDistance;
+
+                    foreach (GameObject obj in targets)
+                    {
+                        if (closest_sqrDistance == 0f)
+                        {
+                            closest = obj;
+                            closest_sqrDistance = (obj.transform.position
+                                - transform.position).sqrMagnitude;
+                        }
+                        else
+                        {
+                            check_sqrDistance = (obj.transform.position
+                                - transform.position).sqrMagnitude;
+
+                            if (closest_sqrDistance > check_sqrDistance)
+                            {
+                                closest = obj;
+                                closest_sqrDistance = check_sqrDistance;
+                            }
+                        }
+                    }
+
+                    target = closest;
+                }
+                else
+                {
+                    target = null;
+                }
+            }
+
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    protected IEnumerator Movement()
+    {
+        while (true)
+        {           
+            if (target == null || (target.transform.position -
+                transform.position).magnitude > target_range)
+            {
+                agent.isStopped = false;
             }
             else
             {
-                target = null;
+                agent.isStopped = true;
             }
 
             yield return new WaitForSeconds(0.3f);

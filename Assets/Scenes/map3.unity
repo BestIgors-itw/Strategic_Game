@@ -488,7 +488,7 @@ PrefabInstance:
     - target: {fileID: 9063175407476122053, guid: 4d109aa8615783242961973646f03ae0,
         type: 3}
       propertyPath: target_range
-      value: 100
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d109aa8615783242961973646f03ae0, type: 3}
