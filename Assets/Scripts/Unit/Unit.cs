@@ -15,8 +15,7 @@ public class Unit : MonoBehaviour
     protected GameObject gun = null;
     public GameObject shell;
 
-    protected GameObject target = null;
-    protected List<GameObject> targets;
+    protected GameObject target = null;   
     public float target_range;
 
     protected Transform destination = null;
@@ -127,7 +126,7 @@ public class Unit : MonoBehaviour
             if (target == null || (target.transform.position -
                 transform.position).magnitude > target_range)
             {
-                targets.Clear();
+                List<GameObject> targets = new List<GameObject>();
 
                 foreach (string tag in targetsTags)
                 {
@@ -135,33 +134,8 @@ public class Unit : MonoBehaviour
                 }
 
                 if (targets.Count != 0)
-                {
-                    GameObject closest = null;
-                    float closest_sqrDistance = 0f;
-                    float check_sqrDistance;
-
-                    foreach (GameObject obj in targets)
-                    {
-                        if (closest_sqrDistance == 0f)
-                        {
-                            closest = obj;
-                            closest_sqrDistance = (obj.transform.position
-                                - transform.position).sqrMagnitude;
-                        }
-                        else
-                        {
-                            check_sqrDistance = (obj.transform.position
-                                - transform.position).sqrMagnitude;
-
-                            if (closest_sqrDistance > check_sqrDistance)
-                            {
-                                closest = obj;
-                                closest_sqrDistance = check_sqrDistance;
-                            }
-                        }
-                    }
-
-                    target = closest;
+                {                   
+                    target = ChooseClosest(targets);
                 }
                 else
                 {
@@ -171,6 +145,62 @@ public class Unit : MonoBehaviour
 
             yield return new WaitForSeconds(0.3f);
         }
+    }
+
+    protected IEnumerator ChooseDestination()
+    {
+        while (true)
+        {
+            if (destination == null)
+            {
+                List<GameObject> destinations = new List<GameObject>();
+
+                destinations.AddRange(GameObject.FindGameObjectsWithTag("Strategic Object"));                
+
+                if (destinations.Count != 0)
+                {                   
+                    destination = ChooseClosest(destinations).transform;
+                }
+                else
+                {
+                    destination = transform;
+                }
+
+                agent.destination = destination.position;
+            }            
+
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    GameObject ChooseClosest(List<GameObject> objs)
+    {
+        GameObject closest = null;
+        float closest_sqrDistance = 0f;
+        float check_sqrDistance;
+
+        foreach (GameObject obj in objs)
+        {
+            if (closest_sqrDistance == 0f)
+            {
+                closest = obj;
+                closest_sqrDistance = (obj.transform.position
+                    - transform.position).sqrMagnitude;
+            }
+            else
+            {
+                check_sqrDistance = (obj.transform.position
+                    - transform.position).sqrMagnitude;
+
+                if (closest_sqrDistance > check_sqrDistance)
+                {
+                    closest = obj;
+                    closest_sqrDistance = check_sqrDistance;
+                }
+            }
+        }
+
+        return closest;
     }
 
     protected IEnumerator Movement()

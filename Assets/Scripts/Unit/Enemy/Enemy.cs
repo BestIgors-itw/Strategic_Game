@@ -13,15 +13,7 @@ public class Enemy : Unit
         gun = transform.Find("Gun").gameObject;
         shells = GameObject.Find("Shells").transform;
 
-        GameObject ds = GameObject.FindGameObjectWithTag("Strategic Object");
-       
-        if (ds != null) {
-            destination = ds.transform;
-            MoveTo(destination);
-        }
-
-        targets = new List<GameObject>();
-
+        StartCoroutine(ChooseDestination());
         StartCoroutine(ChooseTarget(new string[] { "Teammate", "Strategic Object" }));
         StartCoroutine(Fire());
         StartCoroutine(Movement());        

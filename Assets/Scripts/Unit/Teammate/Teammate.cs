@@ -17,8 +17,6 @@ public class Teammate : Unit
         gun = transform.Find("Gun").gameObject;
         shells = GameObject.Find("Shells").transform;
 
-        targets = new List<GameObject>();
-        
         StartCoroutine(ChooseTarget(new string[] { "Enemy" }));
         StartCoroutine(Fire());
     }
