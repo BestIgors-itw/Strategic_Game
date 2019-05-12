@@ -30,7 +30,7 @@ public class Teammate : Unit
 
             if (Physics.Raycast(ray, out hit, 100))
             {
-                if (hit.collider.tag == "Tile" || hit.collider.tag == "Finish")
+                if (hit.collider.tag == "Tile")
                 {
                     info.isSelected = false;
 

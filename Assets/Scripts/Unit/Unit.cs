@@ -16,7 +16,7 @@ public class Unit : MonoBehaviour
     public GameObject shell;
 
     protected GameObject target = null;   
-    public float target_range;
+    public float FireRange;
 
     protected Transform destination = null;
 
@@ -80,7 +80,7 @@ public class Unit : MonoBehaviour
 
                     if (Vector3.Angle(heading, gun.transform.up) < 10.0f)
                     {
-                        if (distance > target_range)
+                        if (distance > FireRange)
                         {
                             isAimed = false;
                         }
@@ -124,7 +124,7 @@ public class Unit : MonoBehaviour
         while (true)
         {
             if (target == null || (target.transform.position -
-                transform.position).magnitude > target_range)
+                transform.position).magnitude > FireRange)
             {
                 List<GameObject> targets = new List<GameObject>();
 
@@ -208,7 +208,7 @@ public class Unit : MonoBehaviour
         while (true)
         {           
             if (target == null || (target.transform.position -
-                transform.position).magnitude > target_range)
+                transform.position).magnitude > FireRange)
             {
                 agent.isStopped = false;
             }
