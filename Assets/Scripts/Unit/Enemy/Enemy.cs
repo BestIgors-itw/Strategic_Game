@@ -3,10 +3,13 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : Unit
-{
+{   
     // Start is called before the first frame update
     void Start()
     {
+        list = gameObject.GetComponentInParent<Enemies>().enemies;
+        list.Add(gameObject);
+
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = 0.3f;
 

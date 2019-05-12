@@ -10,6 +10,9 @@ public class Teammate : Unit
     // Start is called before the first frame update
     void Start()
     {
+        list = gameObject.GetComponentInParent<Teammates>().teammates;
+        list.Add(gameObject);
+
         info = GetComponent<ObjectInfo>();
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = 0.3f;
@@ -30,7 +33,7 @@ public class Teammate : Unit
 
             if (Physics.Raycast(ray, out hit, 100))
             {
-                if (hit.collider.tag == "Tile" || hit.collider.tag == "Finish")
+                if (hit.collider.tag == "Tile")
                 {
                     info.isSelected = false;
 
