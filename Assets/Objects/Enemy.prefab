@@ -203,7 +203,7 @@ MonoBehaviour:
   aimGorizontalSpeed: 120
   aimVerticalSpeed: 40
   shell: {fileID: 8927831795565093403, guid: e1f3eea0c5869da4b81c5bc63a7c81a7, type: 3}
-  FireRange: 0
+  FireRange: 3
 --- !u!54 &4259744743497273718
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -26,6 +26,8 @@ public class Unit : MonoBehaviour
 
     protected Transform shells = null;
 
+    protected List<GameObject> list;
+
     protected void MoveTo(Transform destination)
     {
         agent.destination = destination.position;
@@ -40,6 +42,7 @@ public class Unit : MonoBehaviour
             if (health <= 0)
             {
                 Destroy(gameObject, 0.5f);
+                list.Remove(gameObject);
             }
         }
     }

@@ -129,6 +129,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 104944787}
+  - component: {fileID: 104944788}
   m_Layer: 0
   m_Name: Enemies
   m_TagString: Untagged
@@ -151,6 +152,19 @@ Transform:
   m_Father: {fileID: 1274654072}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &104944788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104944786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dade902359aaf914d89967ababd1be69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies: []
 --- !u!1001 &135425584
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -287,6 +301,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 268712714}
+  - component: {fileID: 268712715}
   m_Layer: 0
   m_Name: Teammates
   m_TagString: Untagged
@@ -309,6 +324,19 @@ Transform:
   m_Father: {fileID: 1274654072}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &268712715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 268712713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd48b37381651a94894ca3a433774e56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teammates: []
 --- !u!4 &312980204 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1674299095548395044, guid: 25d84e74b4d05724faee823e57b87877,
@@ -428,7 +456,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 374623564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 322a4c035a317ac44896f46f4c9a65cf, type: 3}
+  m_Script: {fileID: 11500000, guid: f8de9f650add78048b3f007b146e5436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
@@ -1489,6 +1517,11 @@ PrefabInstance:
       propertyPath: target_range
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3479550076237651814, guid: d99c3f19d963b0949b14a04074d76827,
+        type: 3}
+      propertyPath: FireRange
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d99c3f19d963b0949b14a04074d76827, type: 3}
 --- !u!4 &1621526406 stripped
@@ -1632,7 +1665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0fa7002a6dd7e149841e85694bbe0af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StrategicObjects: []
+  strategicObjects: []
 --- !u!1001 &1707813559
 PrefabInstance:
   m_ObjectHideFlags: 0

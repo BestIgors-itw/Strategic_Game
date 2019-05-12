@@ -10,6 +10,9 @@ public class Teammate : Unit
     // Start is called before the first frame update
     void Start()
     {
+        list = gameObject.GetComponentInParent<Teammates>().teammates;
+        list.Add(gameObject);
+
         info = GetComponent<ObjectInfo>();
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = 0.3f;

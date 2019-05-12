@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Strategic_Object : MonoBehaviour
+public class StrategicObject : MonoBehaviour
 {
     public float health;
     List<GameObject> stratObjs;
 
     void Start()
     {
-        stratObjs = gameObject.GetComponentInParent<Environment>().StrategicObjects;                                  
+        stratObjs = gameObject.GetComponentInParent<Environment>().strategicObjects;                                  
         stratObjs.Add(gameObject);
     }
 

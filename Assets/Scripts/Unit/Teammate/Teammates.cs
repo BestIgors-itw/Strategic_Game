@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Environment : MonoBehaviour
+public class Teammates : MonoBehaviour
 {
-    public List<GameObject> strategicObjects;
+    public List<GameObject> teammates;
 
     // Start is called before the first frame update
     void Start()
-    {        
+    {
         StartCoroutine(Check());
     }
 
@@ -17,8 +17,8 @@ public class Environment : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1f);
-            
-            if (strategicObjects.Count == 0)
+
+            if (teammates.Count == 0)
             {
                 Debug.Log("Defeat");
                 Time.timeScale = 0.1f;
